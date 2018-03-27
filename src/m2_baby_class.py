@@ -92,7 +92,7 @@ def main():
 ########################################################################
 class Baby(object):
 
-    def __init__(self, name):
+    def __init__(self,name):
         self.name = name
         self.time = 0
         print('Hello baby', self.name, '!')
