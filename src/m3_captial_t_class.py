@@ -144,6 +144,7 @@ class CapitalT(object):
         # --------------------------------------------------------------
 
         # horizontal rectangle
+
         dl = letter_thickness / 2
         dw = width / 2
         self.Acorner1 = rg.Point(intersection_center.x - dw, intersection_center.y - dl)
@@ -155,7 +156,12 @@ class CapitalT(object):
         self.Bcorner2 = rg.Point(intersection_center.x + dl, intersection_center.y - dl + height)
         self.v_rect = rg.Rectangle(self.Bcorner1, self.Bcorner2)
 
-
+        self.intersection = intersection_center.clone()
+        self.width = width
+        self.height = height
+        self.thickness = letter_thickness
+        self.color = self.h_rect.fill_color
+        self.outlinecolor = self.h_rect.outline_color
 
     def attach_to(self, window):
         """
@@ -285,21 +291,14 @@ class CapitalT(object):
         #     run_test method in main. Compare the graphics window to
         #     clone.pdf.
         # --------------------------------------------------------------
-        cornera1 = self.Acorner1
-        cornera2 = self.Acorner2
-        cornerb1 = self.Bcorner1
-        cornerb2 = self.Bcorner2
-        h_rect = rg.Rectangle(cornera1, cornera2)
-        v_rect = rg.Rectangle(cornerb1, cornerb2)
-        h_rect.fill_color = self.h_rect.fill_color
-        v_rect.fill_color = self.v_rect.fill_color
-        h_rect.outline_color = self.h_rect.outline_color
-        v_rect.outline_color = self.v_rect.outline_color
-        return h_rect and v_rect
+        t = CapitalT(self.intersection,self.width,self.height,self.thickness)
+        t.set_colors(self.color,self.outlinecolor)
+
+        return t
 
 # ----------------------------------------------------------------------
 # If this module is running at the top level (as opposed to being
 # imported by another module), then call the 'main' function.
-# ----------------------------------------------------------------------
+#  ----------------------------------------------------------------------
 if __name__ == '__main__':
     main()
