@@ -147,21 +147,15 @@ class CapitalT(object):
 
         dl = letter_thickness / 2
         dw = width / 2
-        self.Acorner1 = rg.Point(intersection_center.x - dw, intersection_center.y - dl)
-        self.Acorner2 = rg.Point(intersection_center.x + dw, intersection_center.y + dl)
-        self.h_rect = rg.Rectangle(self.Acorner1, self.Acorner2)
+        Acorner1 = rg.Point(intersection_center.x - dw, intersection_center.y - dl)
+        Acorner2 = rg.Point(intersection_center.x + dw, intersection_center.y + dl)
+        self.h_rect = rg.Rectangle(Acorner1, Acorner2)
 
         # vertical rectangle
-        self.Bcorner1 = rg.Point(intersection_center.x - dl, intersection_center.y - dl)
-        self.Bcorner2 = rg.Point(intersection_center.x + dl, intersection_center.y - dl + height)
-        self.v_rect = rg.Rectangle(self.Bcorner1, self.Bcorner2)
+        Bcorner1 = rg.Point(intersection_center.x - dl, intersection_center.y - dl)
+        Bcorner2 = rg.Point(intersection_center.x + dl, intersection_center.y - dl + height)
+        self.v_rect = rg.Rectangle(Bcorner1, Bcorner2)
 
-        self.intersection = intersection_center.clone()
-        self.width = width
-        self.height = height
-        self.thickness = letter_thickness
-        self.color = self.h_rect.fill_color
-        self.outlinecolor = self.h_rect.outline_color
 
     def attach_to(self, window):
         """
@@ -254,15 +248,15 @@ class CapitalT(object):
         #     move_by.pdf. Note: the pdf shows the different locations
         #     that the T moves through, but there is only 1 T at any moment.
         # --------------------------------------------------------------
-        self.Acorner1.x = self.Acorner1.x + dx
-        self.Acorner2.x = self.Acorner2.x + dx
-        self.Acorner1.y = self.Acorner1.y + dy
-        self.Acorner2.y = self.Acorner2.y + dy
+        self.h_rect.corner_1.x = self.h_rect.corner_1.x + dx
+        self.h_rect.corner_2.x = self.h_rect.corner_2.x + dx
+        self.h_rect.corner_1.y = self.h_rect.corner_1.y + dy
+        self.h_rect.corner_2.y = self.h_rect.corner_2.y + dy
 
-        self.Bcorner1.x = self.Bcorner1.x + dx
-        self.Bcorner2.x = self.Bcorner2.x + dx
-        self.Bcorner1.y = self.Bcorner1.y + dy
-        self.Bcorner2.y = self.Bcorner2.y + dy
+        self.v_rect.corner_1.x = self.v_rect.corner_1.x + dx
+        self.v_rect.corner_2.x = self.v_rect.corner_2.x + dx
+        self.v_rect.corner_1.y = self.v_rect.corner_1.y + dy
+        self.v_rect.corner_2.y = self.v_rect.corner_2.y + dy
 
 
     def clone(self):
@@ -291,10 +285,10 @@ class CapitalT(object):
         #     run_test method in main. Compare the graphics window to
         #     clone.pdf.
         # --------------------------------------------------------------
-        t = CapitalT(self.intersection,self.width,self.height,self.thickness)
-        t.set_colors(self.color,self.outlinecolor)
+        T = CapitalT(self.h_rect.get_center(),self.h_rect.get_width(),self.v_rect.get_height(),self.h_rect.get_height())
+        T.set_colors(self.h_rect.fill_color,self.h_rect.outline_color)
 
-        return t
+        return T
 
 # ----------------------------------------------------------------------
 # If this module is running at the top level (as opposed to being
